@@ -11,17 +11,30 @@
 </ul>
 
 <h2>Comments</h2>
-<% @post.comments.each do |comment| %>
+<% @post.comments.where(comment_id: nil).each do |comment| %>
   <p>
-    <strong>Commenter:</strong>
+    <strong> main Commenter:</strong>
     <%= comment.commenter %>
   </p>
 
   <p>
-    <strong>Comment:</strong>
+    <strong>main Comment:</strong>
     <%= comment.body %>
   </p>
+  
+  <% comment.comments.each do |i| %>
+    <p>
+      <strong>reply commenter:</strong>
+      <%= i.commenter %>
+    </p>
+  
+    <p>
+      <strong>reply Comment:</strong>
+      <%= i.body %>
+    </p>
+  <% end %>
 <% end %>
+
 
 <h2>Add a comment:</h2>
 <%= form_with model: [ @post, @post.comments.build ] do |form| %>
